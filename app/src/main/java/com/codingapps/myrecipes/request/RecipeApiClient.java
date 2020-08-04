@@ -27,6 +27,7 @@ public class RecipeApiClient {
     private RetrieveRecipeRunnable mRetrieveRecipeRunnable;
 
     private RecipeApiClient() {
+        mRecipes = new MutableLiveData<>();
     }
 
     public static RecipeApiClient getInstance() {
