@@ -13,17 +13,22 @@ public class ReciperViewHolder extends RecyclerView.ViewHolder implements View.O
 
     TextView title, publisher,socialScore;
     AppCompatImageView image;
+    OnRecipeListener onRecipeListener;
 
-    public ReciperViewHolder(@NonNull View itemView) {
+    public ReciperViewHolder(@NonNull View itemView, OnRecipeListener onRecipeListener) {
         super(itemView);
+        this.onRecipeListener = onRecipeListener;
+
         title = itemView.findViewById(R.id.recipe_title);
         publisher = itemView.findViewById(R.id.recipe_publisher);
         socialScore = itemView.findViewById(R.id.recipe_social_score);
         image = itemView.findViewById(R.id.recipe_image);
+
+        itemView.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-
+        onRecipeListener.onRecipeClick(getAdapterPosition());
     }
 }
