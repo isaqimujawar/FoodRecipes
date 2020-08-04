@@ -43,6 +43,9 @@ public class RecipeListActivity extends BaseActivity {
             }
         });
     }
+    public void searchRecipesApi(String query, int pageNumber){
+        mRecipeListViewModel.searchRecipesApi(query,pageNumber);
+    }
     private void testRetrofitRequest(){
         RecipeApi recipeApi = ServiceGenerator.getRecipeApi();
         Call<RecipeResponse> responseCall = recipeApi.getRecipe(

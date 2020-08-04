@@ -1,29 +1,36 @@
 package com.codingapps.myrecipes.repository;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.codingapps.myrecipes.model.Recipe;
+import com.codingapps.myrecipes.request.RecipeApiClient;
 
 import java.util.List;
 
 public class RecipeRepository {
     //vars
     private static RecipeRepository instance;
-    private MutableLiveData<List<Recipe>> mRecipes;
+    private RecipeApiClient mRecipeApiClient;
 
-    public static RecipeRepository getInstance(){
+    private RecipeRepository() {
+        mRecipeApiClient = RecipeApiClient.getInstance();
+    }
+
+    public static RecipeRepository getInstance() {
         if (instance == null) {
             instance = new RecipeRepository();
         }
         return instance;
     }
 
-    private RecipeRepository() {
-        mRecipes = new MutableLiveData<>();
+    public LiveData<List<Recipe>> getRecipes() {
+        return mRecipeApiClient.getRecipes();
     }
 
-    public LiveData<List<Recipe>> getRecipes(){
-        return mRecipes;
+    public void searchRecipesApi(String query, int pageNumber){
+        if (pageNumber == 0){
+            pageNumber = 1;
+        }
+        mRecipeApiClient.searchRecipesApi(query,pageNumber);
     }
 }
