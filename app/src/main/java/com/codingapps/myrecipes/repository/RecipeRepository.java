@@ -11,6 +11,8 @@ public class RecipeRepository {
     //vars
     private static RecipeRepository instance;
     private RecipeApiClient mRecipeApiClient;
+    private String mQuery;
+    private int mPageNumber;
 
     private RecipeRepository() {
         mRecipeApiClient = RecipeApiClient.getInstance();
@@ -27,10 +29,19 @@ public class RecipeRepository {
         return mRecipeApiClient.getRecipes();
     }
 
-    public void searchRecipesApi(String query, int pageNumber){
-        if (pageNumber == 0){
+    public void searchRecipesApi(String query, int pageNumber) {
+        if (pageNumber == 0) {
             pageNumber = 1;
         }
-        mRecipeApiClient.searchRecipesApi(query,pageNumber);
+        mQuery = query;
+        mPageNumber = pageNumber;
+        mRecipeApiClient.searchRecipesApi(query, pageNumber);
+    }
+    public void searchNextPage(){
+        mRecipeApiClient.searchRecipesApi(mQuery,mPageNumber + 1);
+    }
+
+    public void cancelRequest() {
+        mRecipeApiClient.cancelRequest();
     }
 }

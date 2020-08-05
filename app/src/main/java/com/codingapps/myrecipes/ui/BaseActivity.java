@@ -1,15 +1,27 @@
 package com.codingapps.myrecipes.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.os.Bundle;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 
 import com.codingapps.myrecipes.R;
 
-public class BaseActivity extends AppCompatActivity {
-
+public abstract class BaseActivity extends AppCompatActivity {
+    private ProgressBar mProgressBar;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
+    public void setContentView(int layoutResID) {
+        ConstraintLayout constraintLayout = (ConstraintLayout) getLayoutInflater().inflate(R.layout.activity_base,null);
+        FrameLayout frameLayout = constraintLayout.findViewById(R.id.activity_content);
+        mProgressBar = constraintLayout.findViewById(R.id.progress_bar);
+        getLayoutInflater().inflate(layoutResID,frameLayout,true);
+        super.setContentView(layoutResID);
+    }
+
+    public void showProgressBar(boolean visiblity) {
+        mProgressBar.setVisibility(visiblity ? View.VISIBLE : View.INVISIBLE);
     }
 }
